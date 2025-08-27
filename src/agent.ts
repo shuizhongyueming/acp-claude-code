@@ -100,7 +100,7 @@ export class ClaudeACPAgent implements Agent {
         .map(block => block.text)
         .join('')
       
-      this.log(`Prompt: ${promptText.substring(0, 100)}...`)
+      this.log(`Prompt received (${promptText.length} chars): ${promptText.substring(0, 100)}...`)
       
       // Start Claude query
       const messages = query({
@@ -114,14 +114,18 @@ export class ClaudeACPAgent implements Agent {
       session.pendingPrompt = messages
       
       // Process messages and send updates
+      let messageCount = 0
       for await (const message of messages) {
         if (session.abortController?.signal.aborted) {
           return { stopReason: 'cancelled' }
         }
         
+        messageCount++
+        this.log(`Processing message #${messageCount} of type: ${message.type}`)
         await this.handleClaudeMessage(params.sessionId, message)
       }
       
+      this.log(`Processed ${messageCount} messages total`)
       session.pendingPrompt = null
       
       return {
@@ -189,7 +193,7 @@ export class ClaudeACPAgent implements Agent {
                   sessionUpdate: 'agent_message_chunk',
                   content: {
                     type: 'text',
-                    text: content.text || '',
+                    text: (content.text || '') + '\n',
                   },
                 },
               })
@@ -210,13 +214,37 @@ export class ClaudeACPAgent implements Agent {
             sessionUpdate: 'agent_message_chunk',
             content: {
               type: 'text',
-              text: message.text || '',
+              text: (message.text || '') + '\n',
             },
           },
         })
         break
         
-      case 'tool_use_start':
+      case 'tool_use_start': {
+        // Log the tool call details for debugging
+        this.log(`Tool call started: ${message.tool_name}`, `ID: ${message.id}`)
+        
+        // Handle tool input - ensure it's a proper object
+        const input = message.input || {}
+        
+        // Log the input for debugging
+        if (this.DEBUG) {
+          try {
+            this.log(`Tool input:`, JSON.stringify(input, null, 2))
+            
+            // Special logging for content field
+            if (input && typeof input === 'object' && 'content' in input) {
+              const content = (input as Record<string, unknown>).content
+              if (typeof content === 'string') {
+                const preview = content.substring(0, 100)
+                this.log(`Content preview: ${preview}${content.length > 100 ? '...' : ''}`)
+              }
+            }
+          } catch (e) {
+            this.log('Error logging input:', e)
+          }
+        }
+        
         await this.client.sessionUpdate({
           sessionId,
           update: {
@@ -225,12 +253,20 @@ export class ClaudeACPAgent implements Agent {
             title: message.tool_name || 'Tool',
             kind: this.mapToolKind(message.tool_name || ''),
             status: 'pending',
-            rawInput: (message.input || {}) as Record<string, unknown>,
+            // Pass the input directly without extra processing
+            rawInput: input as Record<string, unknown>,
           },
         })
         break
+      }
         
-      case 'tool_use_output':
+      case 'tool_use_output': {
+        const outputText = message.output || ''
+        
+        // Log the tool output for debugging
+        this.log(`Tool call completed: ${message.id}`)
+        this.log(`Tool output length: ${outputText.length} characters`)
+        
         await this.client.sessionUpdate({
           sessionId,
           update: {
@@ -242,14 +278,16 @@ export class ClaudeACPAgent implements Agent {
                 type: 'content',
                 content: {
                   type: 'text',
-                  text: message.output || '',
+                  text: outputText + '\n',
                 },
               },
             ],
-            rawOutput: { output: message.output },
+            // Pass output directly without extra wrapping
+            rawOutput: message.output ? { output: outputText } : undefined,
           },
         })
         break
+      }
         
       case 'tool_use_error':
         await this.client.sessionUpdate({
@@ -294,6 +332,18 @@ export class ClaudeACPAgent implements Agent {
               content: {
                 type: 'text',
                 text: event.delta.text || '',
+              },
+            },
+          })
+        } else if (event.type === 'content_block_stop') {
+          // Add newline when content block ends
+          await this.client.sessionUpdate({
+            sessionId,
+            update: {
+              sessionUpdate: 'agent_message_chunk',
+              content: {
+                type: 'text',
+                text: '\n',
               },
             },
           })
