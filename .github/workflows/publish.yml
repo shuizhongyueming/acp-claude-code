@@ -12,7 +12,6 @@ permissions:
   packages: write
   issues: write
   pull-requests: write
-  id-token: write  # Required for OIDC/provenance
 
 jobs:
   release:
@@ -62,5 +61,5 @@ jobs:
       - name: Release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          # No NPM_TOKEN needed - using OIDC instead
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: npx semantic-release
