@@ -1,3 +1,13 @@
+## [0.3.0](https://github.com/xuanwo/acp-claude-code/compare/v0.2.2...v0.3.0) (2025-08-27)
+
+### Features
+
+* Support session resume ([#19](https://github.com/xuanwo/acp-claude-code/issues/19)) ([513ec9d](https://github.com/xuanwo/acp-claude-code/commit/513ec9d719178eaf18184c586529f134d0140070))
+
+### CI/CD
+
+* Don't upload dist to github directly ([64cd37d](https://github.com/xuanwo/acp-claude-code/commit/64cd37df1065e880faff38c778aabbb25127b552))
+
 ## [0.2.2](https://github.com/xuanwo/acp-claude-code/compare/v0.2.1...v0.2.2) (2025-08-27)
 
 ### Bug Fixes
