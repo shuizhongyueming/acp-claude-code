@@ -33,7 +33,11 @@
             { "type": "revert", "section": "Reverts", "hidden": false },
             { "type": "docs", "section": "Documentation", "hidden": false },
             { "type": "style", "section": "Styles", "hidden": false },
-            { "type": "refactor", "section": "Code Refactoring", "hidden": false },
+            {
+              "type": "refactor",
+              "section": "Code Refactoring",
+              "hidden": false
+            },
             { "type": "test", "section": "Tests", "hidden": false },
             { "type": "build", "section": "Build System", "hidden": false },
             { "type": "ci", "section": "CI/CD", "hidden": false },
@@ -52,12 +56,6 @@
       "@semantic-release/npm",
       {
         "npmPublish": true
-      }
-    ],
-    [
-      "@semantic-release/github",
-      {
-        "assets": ["dist/**"]
       }
     ],
     [
