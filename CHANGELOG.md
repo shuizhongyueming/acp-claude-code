@@ -1,3 +1,9 @@
+## [0.3.2](https://github.com/xuanwo/acp-claude-code/compare/v0.3.1...v0.3.2) (2025-08-28)
+
+### Bug Fixes
+
+* Make permission and tool use work in zed ([#26](https://github.com/xuanwo/acp-claude-code/issues/26)) ([8b0b458](https://github.com/xuanwo/acp-claude-code/commit/8b0b45852092c2f7b9af6344011a856ee7f7a6d6))
+
 ## [0.3.1](https://github.com/xuanwo/acp-claude-code/compare/v0.3.0...v0.3.1) (2025-08-28)
 
 ### Bug Fixes
