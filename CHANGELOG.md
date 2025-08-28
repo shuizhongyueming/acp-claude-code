@@ -1,3 +1,14 @@
+## [0.3.1](https://github.com/xuanwo/acp-claude-code/compare/v0.3.0...v0.3.1) (2025-08-28)
+
+### Bug Fixes
+
+* Remove not needed checks ([#25](https://github.com/xuanwo/acp-claude-code/issues/25)) ([670631d](https://github.com/xuanwo/acp-claude-code/commit/670631debf8ecbdc33957003add12956dc7aa329))
+
+### CI/CD
+
+* Create github releases but not assets ([686e0c9](https://github.com/xuanwo/acp-claude-code/commit/686e0c9606ab3a5d722dc85d79ea2cd83ae305eb))
+* **deps:** Bump actions/checkout from 4 to 5 ([#23](https://github.com/xuanwo/acp-claude-code/issues/23)) ([cd2435f](https://github.com/xuanwo/acp-claude-code/commit/cd2435f2467ca312680590f08638540ae432d32e))
+
 ## [0.3.0](https://github.com/xuanwo/acp-claude-code/compare/v0.2.2...v0.3.0) (2025-08-27)
 
 ### Features
