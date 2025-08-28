@@ -101,6 +101,28 @@ If you prefer pnpm:
 }
 ```
 
+### Using Third-party Models
+
+To use [DeepSeek's models](https://api-docs.deepseek.com/zh-cn/guides/anthropic_api) in Claude Code:
+
+```json
+{
+  "agent_servers": {
+    "DeepSeek Claude Code": {
+      "command": "npx",
+      "args": ["acp-claude-code"],
+      "env": {
+        "ACP_PERMISSION_MODE": "acceptEdits",
+        "ANTHROPIC_BASE_URL": "https://api.deepseek.com/anthropic",
+        "ANTHROPIC_AUTH_TOKEN": "sk-*****",
+        "ANTHROPIC_SMALL_FAST_MODEL": "deepseek-chat",
+        "ANTHROPIC_MODEL": "deepseek-chat"
+      }
+    }
+  }
+}
+```
+
 ## Development
 
 ### Building from source
