@@ -1,3 +1,17 @@
+## [0.4.0](https://github.com/xuanwo/acp-claude-code/compare/v0.3.2...v0.4.0) (2025-08-28)
+
+### Features
+
+* Separate CLI entry point from library exports ([#28](https://github.com/xuanwo/acp-claude-code/issues/28)) ([406a38d](https://github.com/xuanwo/acp-claude-code/commit/406a38d3c56754dd45468247a2d35a9c2e070540))
+
+### Documentation
+
+* Add notes on zed's efforts ([c1c0111](https://github.com/xuanwo/acp-claude-code/commit/c1c0111d0fc65ec972a6e3993c405acf116fb23d))
+
+### Miscellaneous
+
+* Upgrade eslint to v9 ([#27](https://github.com/xuanwo/acp-claude-code/issues/27)) ([250e063](https://github.com/xuanwo/acp-claude-code/commit/250e063c4a04de408d1eafc201631602793f6298))
+
 ## [0.3.2](https://github.com/xuanwo/acp-claude-code/compare/v0.3.1...v0.3.2) (2025-08-28)
 
 ### Bug Fixes
