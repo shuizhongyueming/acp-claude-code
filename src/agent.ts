@@ -37,14 +37,39 @@ export class ClaudeACPAgent implements Agent {
       | "acceptEdits"
       | "bypassPermissions"
       | "plan") || "default";
+  private env: Record<string, string> = {};
 
   constructor(private client: Client) {
+    this.collectEnvVariables();
     this.log("Initialized with client");
   }
 
   private log(message: string, ...args: unknown[]) {
     if (this.DEBUG) {
       console.error(`[ClaudeACPAgent] ${message}`, ...args);
+    }
+  }
+
+  private collectEnvVariables() {
+    const envVars = [
+      "ANTHROPIC_BASE_URL",
+      "ANTHROPIC_AUTH_TOKEN",
+      "ANTHROPIC_SMALL_FAST_MODEL",
+      "ANTHROPIC_MODEL",
+    ];
+
+    for (const envVar of envVars) {
+      const value = process.env[envVar];
+      if (value) {
+        this.env[envVar] = value;
+        this.log(`Collected env variable: ${envVar}`);
+      }
+    }
+
+    if (Object.keys(this.env).length > 0) {
+      this.log(
+        `Collected ${Object.keys(this.env).length} environment variables`,
+      );
     }
   }
 
@@ -190,6 +215,7 @@ export class ClaudeACPAgent implements Agent {
           permissionMode: permissionMode,
           // Resume if we have a Claude session_id
           resume: session.claudeSessionId || undefined,
+          env: Object.keys(this.env).length > 0 ? this.env : undefined,
         },
       });
 
