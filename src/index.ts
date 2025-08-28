@@ -1,11 +1,9 @@
-#!/usr/bin/env node
-
 import { AgentSideConnection } from '@zed-industries/agent-client-protocol'
 import { ClaudeACPAgent } from './agent.js'
 import { Writable, Readable } from 'node:stream'
 import { WritableStream, ReadableStream } from 'node:stream/web'
 
-async function main() {
+export async function main() {
   // Only log to stderr in debug mode
   const DEBUG = process.env.ACP_DEBUG === 'true'
   
@@ -70,12 +68,5 @@ async function main() {
     process.exit(1)
   }
 }
-
-// Always run main for CLI usage
-// This ensures compatibility with npx/pnpx and other package runners
-main().catch(error => {
-  console.error('[Main] Unhandled error:', error)
-  process.exit(1)
-})
 
 export { ClaudeACPAgent }
