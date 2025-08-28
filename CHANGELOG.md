@@ -1,3 +1,9 @@
+## [0.5.0](https://github.com/xuanwo/acp-claude-code/compare/v0.4.0...v0.5.0) (2025-08-28)
+
+### Features
+
+* Add basic code formatting ([#31](https://github.com/xuanwo/acp-claude-code/issues/31)) ([284c3ca](https://github.com/xuanwo/acp-claude-code/commit/284c3ca73356ffde1c7293dba715ac6d03433ef2))
+
 ## [0.4.0](https://github.com/xuanwo/acp-claude-code/compare/v0.3.2...v0.4.0) (2025-08-28)
 
 ### Features
